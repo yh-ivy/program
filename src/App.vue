@@ -18,12 +18,18 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
+import { urlParse } from 'common/js/util';
 import header from 'components/header/header';
 const ERR_OK = 0;
 export default {
   data() {
     return {
-      seller: {}
+      seller: {
+        id: (function() {
+          let urlParm = urlParse();
+          return urlParm.id;
+        })()
+      }
     }
   },
   created() {
@@ -32,7 +38,6 @@ export default {
       if (res.errno === ERR_OK) {
         // 相当于 extend方法 扩展  es6语法   vue推荐的给对象扩展属性方法
         this.seller = Object.assign({}, this.seller, res.data);
-        console.log(this.seller)
       }
     })
   },
